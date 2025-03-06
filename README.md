@@ -111,3 +111,7 @@ The application is fully responsive and works well on mobile, tablet, and deskto
 
 - [Next.js](https://nextjs.org/) for the React framework
 - [WeFood API](https://api.wefood.dev) for providing restaurant data
+
+
+[Restaurant-Web React Preview](video.mp4)
+
