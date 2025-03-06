@@ -1,95 +1,76 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { RestaurantCard } from '@/components/RestaurantCard';
+import styles from './page.module.css'; 
+import { getRestaurants } from '@/utils/api';
+import { Restaurant } from '@/utils/restaurant';
+import Link from 'next/link';
+
+const LIMIT = 9;
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const { ref, inView } = useInView();
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const fetchRestaurants = async () => {
+    if (isLoading || !hasMore) return;
+    
+    setIsLoading(true);
+    try {
+      const newRestaurants = await getRestaurants(offset, LIMIT);
+      if (newRestaurants.length < LIMIT) {
+        setHasMore(false);
+      }
+      setRestaurants(prev => [...prev, ...newRestaurants]);
+      setOffset(prev => prev + LIMIT);
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (inView) {
+      fetchRestaurants();
+    }
+  }, [inView]);
+
+  return (
+    <main className={styles.container}>
+<div className={styles.header}>
+        <h1 className={styles.title}>Restaurants</h1>
+        <Link href="/favorites" className={styles.backLink}>
+          <svg
+            className={styles.heartIcon}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 8.25c0-2.9 2.35-5.25 5.25-5.25a5.25 5.25 0 0 1 4.5 2.39 5.25 5.25 0 0 1 4.5-2.39c2.9 0 5.25 2.35 5.25 5.25 0 6.75-9.75 11.5-9.75 11.5S3 15 3 8.25z"
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+          </svg> Your Favorites 
+        </Link>
+      </div>      <div className={styles.restaurantList}>
+        {restaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant._id} restaurant={restaurant} />
+        ))}
+      </div>
+      {hasMore && (
+        <div ref={ref} className={styles.loadingContainer}>
+          {isLoading && <div className={styles.loading}>Loading more restaurants...</div>}
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      )}
+    </main>
   );
 }
