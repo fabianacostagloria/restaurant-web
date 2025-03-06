@@ -112,9 +112,7 @@ The application is fully responsive and works well on mobile, tablet, and deskto
 - [Next.js](https://nextjs.org/) for the React framework
 - [WeFood API](https://api.wefood.dev) for providing restaurant data
 
+[![Assistir vídeo](https://img.shields.io/badge/Play%20Video-brightgreen)]([https://github.com/seu-usuario/seu-repositorio](https://github.com/fabianacostagloria/restaurant-web)/raw/main/videos/video.mp4)
 
-<video width="320" height="240" controls>
-  <source src="video.mp4" type="video/mp4">
-  Seu navegador não suporta o elemento de vídeo.
-</video>
+
 
