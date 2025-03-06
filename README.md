@@ -113,5 +113,8 @@ The application is fully responsive and works well on mobile, tablet, and deskto
 - [WeFood API](https://api.wefood.dev) for providing restaurant data
 
 
-[Restaurant-Web React Preview](video.mp4)
+<video width="320" height="240" controls>
+  <source src="video.mp4" type="video/mp4">
+  Seu navegador não suporta o elemento de vídeo.
+</video>
 
