@@ -112,7 +112,7 @@ The application is fully responsive and works well on mobile, tablet, and deskto
 - [Next.js](https://nextjs.org/) for the React framework
 - [WeFood API](https://api.wefood.dev) for providing restaurant data
 
-[![Assistir vídeo](https://img.shields.io/badge/Play%20Video-brightgreen)]([https://github.com/seu-usuario/seu-repositorio](https://github.com/fabianacostagloria/restaurant-web)/raw/main/videos/video.mp4)
+[![Assistir vídeo](https://img.shields.io/badge/Play%20Video-brightgreen)]([https://github.com/seu-usuario/seu-repositorio](https://github.com/fabianacostagloria/restaurant-web/raw/main/videos/video.mp4)
 
 
 
