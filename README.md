@@ -46,7 +46,7 @@ src/
 - **Next.js**: React framework for server-rendered applications
 - **TypeScript**: For type safety and better developer experience
 - **CSS Modules**: For component-scoped styling
-- **Fetch**: For API requests
+- **Axios**: For API requests
 - **React Intersection Observer**: For implementing infinite scrolling
 
 ## Getting Started
